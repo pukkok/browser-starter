@@ -1,0 +1,12 @@
+.wrapper{
+  display: flex;
+  gap: 20px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.card{
+  border: solid 1px cadetblue;
+  padding: 20px;
+  width: 300px;
+}
