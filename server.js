@@ -1,14 +1,12 @@
 const fs = require('fs')
 const http = require('http')
 const { exec } = require('child_process') // child_process 모듈 추가
-/**
- * html 템플릿 생성
- * 
- * 컴포넌트 함수 개별로 생성
- * 
- * 
- */
 
+/**
+ * @description 
+ * root를 가진 html파일로 생성
+ * 작동 확인을 하기 위해 "html 실행 확인"을 브라우저에 띄움
+ */
 const Template = (title = 'document') => {
   let result = ""
 
@@ -108,5 +106,3 @@ server.listen(5000, () => {
     }
   })
 })
-
-// execSync(`start C:\\...경로...\\test\\${branch}\\${date}`)
