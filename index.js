@@ -1,6 +1,6 @@
 const fs = require('fs')
 const http = require('http')
-
+const { exec } = require('child_process') // child_process 모듈 추가
 /**
  * html 템플릿 생성
  * 
@@ -13,7 +13,7 @@ const Template = (title = 'document') => {
   let result = ""
 
   const addStyle = `<link rel="stylesheet" href="/public/style.css">`
-  const addScript = `<script src="/public/app.module.js"></script>`
+  const addScript = `<script defer src="/public/app.js"></script>`
 
   const DOCTYPE = `<!DOCTYPE html>`
   const space = "  "
@@ -34,8 +34,9 @@ const Template = (title = 'document') => {
 
   const body = 
   "<body>" + "\n" +
-  space + `<div id="root"></div>` + "\n" +
+  space + `<div id="root">동작확인</div>` + "\n" +
   space + addScript + "\n" +
+  // `<script type="text/javascript">console.log('동작')</script>` +
   "</body>"
   
   result = 
@@ -45,29 +46,41 @@ const Template = (title = 'document') => {
   return result
 }
 
-const html = Template('document')
+const html = Template('Wait React')
 
+// 파일 쓰기
 fs.writeFile('public/index.html', html, 'utf-8', (err) => {
   if(err) return console.log(err)
 })
 
+const server = http.createServer((req, res) => {
+  const filePath = './public/index.html'
 
-const app = http.createServer((req, res) => {
-    const url = '/public/index.html'
-    // if(req.method === 'GET'){
-    //   if(req.url === '/'){
-    //     fs.readFile('./index.html', 'utf-8', (err, data) => {
-    //       if(err) console.log(err)
-    //     })
-    //   }
-    // }
-    res.writeHead(200, {'Content-Type':'text/html'})
-    fs.readFile('public/index.html', 'utf-8', (err, data) => {
-      if(err) return console.log(err)
-      res.end(data, 'utf-8')
+  fs.readFile(filePath, (err, data) => {
+    if (err) {
+      res.writeHead(404, { 'Content-Type': 'text/html' })
+      res.end('<h1>404 Not Found</h1>')
+      return
+    }
+    res.writeHead(200, { 'Content-Type': 'text/html' })
+    res.end(data)
+  })
+})
+
+server.listen(5000, () => {
+  console.log('서버동작 시작')
+  
+  // 서버 시작 후 브라우저 자동 열기
+  exec('start http://localhost:5000', (err) => { // 윈도우는 "start"
+    if (err) {
+      console.log('브라우저 열기 실패:', err)
+    }
+    // 파일을 열고나서 app.js를 추가하는 방법 찾기
+    fs.readFile('./public/app.js', (err, jsFile) => {
+      if(err) return console.error('app.js에러')
+      // console.log(jsFile)
     })
+  })
 })
 
-app.listen(5000, () => {
-  console.log('5000번 동작')
-})
+// execSync(`start C:\\...경로...\\test\\${branch}\\${date}`)

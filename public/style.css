@@ -1,3 +1,7 @@
+#root{
+  background-color: pink;
+}
+
 .wrapper{
   display: flex;
   gap: 20px;
