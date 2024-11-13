@@ -75,7 +75,7 @@ const fileReader = (res, url) => {
   // console.log('url : ', url)
   // console.log('타입 : ', fileContentType)
   fs.readFile(path, (err, readFile) => {
-    if(err) return console.error('파일 읽기 실패')
+    if(err) return console.error('파일 읽기 실패 : ', path)
     
     res.writeHead(200, { 'Content-Type' : fileContentType })
     res.end(readFile)
