@@ -45,8 +45,7 @@ class FileReader {
 		}
 	}
 
-	get read () {
-
+	read () {
 		const path = this._url === '/' ? './public/index.html' : '.' + this._url
 
 		fs.readFile(path, (err, readFile) => {
