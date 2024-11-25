@@ -19,7 +19,7 @@ class Template {
   this.space + this.#jsScript + "\n" +
   "</body>"
 
-  #getHead () {
+  get head () {
     return (
       "<head>" + "\n" +
       this.space + '<meta charset="UTF-8">' + "\n" +
@@ -31,18 +31,18 @@ class Template {
     )
   }
 
-  #getHTML () {
+  get HTML () {
     return (
       '<html lang="ko">' + "\n" + 
-      this.#getHead() + this.#body + "\n" + 
+      this.head + this.#body + "\n" + 
       "</html>"
     )
   } 
   
-  get render () {
+  render () {
     return (
       this.#DOCTYPE + "\n" +
-      this.#getHTML()
+      this.HTML
     )
   }
 }
