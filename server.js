@@ -1,6 +1,6 @@
-const fs = require('fs')
-const http = require('http')
-const { exec } = require('child_process') // child_process 모듈 추가
+import http from 'http'
+import fs from 'fs'
+import { exec } from 'child_process' // child_process 모듈 추가
 
 /**
  * @description 
