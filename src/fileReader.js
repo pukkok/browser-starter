@@ -26,12 +26,12 @@ class FileReader {
 		}
 	}
 
-	_extender() {
+	get extender() {
 		return this._url.split('.').pop()
 	}
 	
-	fileContentType () {
-		switch(this._extender()) {
+	get fileContentType () {
+		switch(this.extender) {
 			case 'html' : return 'text/html'
 			case 'css' : return 'text/css'
 			case 'json' : return 'application/json'
@@ -54,7 +54,7 @@ class FileReader {
 				return console.error('파일 읽기 실패 : ', path)
 			}
 			
-			this.res.writeHead(200, { 'Content-Type' : this.fileContentType() })
+			this.res.writeHead(200, { 'Content-Type' : this.fileContentType })
 			this.res.end(readFile)
 		})
 	}
