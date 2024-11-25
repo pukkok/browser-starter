@@ -1,11 +1,16 @@
 import fs from 'fs'
 
 /**
- * @param {string} res 
- * @param {string} path 
- * @param {string} fileContentType 
+ * @param {Function} res 
+ * @param {string} url
  * 
- * @description path와 fileContentType을 받아 응답(res)을 전달해 줍니다.
+ * @description
+ * res와 url을 가지고 있는 생성자 함수입니다.
+ * @method
+ * url : 현재 url을 리턴
+ * extender : 현재 확장자를 리턴
+ * fileContentType : 현재 content-type을 리턴
+ * read : readFile을 실행
  */
 class FileReader {
 	constructor (res, url){
@@ -45,9 +50,9 @@ class FileReader {
 		const path = this._url === '/' ? './public/index.html' : '.' + this._url
 
 		fs.readFile(path, (err, readFile) => {
-			if(err) {
+			if(err) { // 경로가 잘못된 경우
 				fs.readFile('./public/notFound.html', (err, notFoundFile) => {
-					if(err) return console.error('서버 에러')
+					if(err) return console.error('서버 에러') // 이것도 에러나면 서버 에러 처리
 					this.res.writeHead(404, { 'Content-Type': 'text/html; charset=utf8' })
 					this.res.end(notFoundFile)
 				})
