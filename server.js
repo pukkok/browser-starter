@@ -3,10 +3,10 @@ import fs from 'fs'
 import { exec } from 'child_process' // child_process 모듈 추가
 import Template from './src/createTemplate.js'
 
-const html = Template('Wait React')
+const html = new Template('Wait React')
 
 // 파일 쓰기
-fs.writeFile('public/index.html', html, 'utf-8', (err) => {
+fs.writeFile('public/index.html', html.render, 'utf-8', (err) => {
   if(err) return console.log(err)
 })
 
