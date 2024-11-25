@@ -7,7 +7,7 @@ import FileReader from './src/fileReader.js'
 const html = new Template('Wait React')
 
 // 파일 쓰기
-fs.writeFile('public/index.html', html.render, 'utf-8', (err) => {
+fs.writeFile('public/index.html', html.render(), 'utf-8', (err) => {
   if(err) return console.log(err)
 })
 
