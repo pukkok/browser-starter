@@ -25,6 +25,7 @@ class Template {
       this.space + '<meta charset="UTF-8">' + "\n" +
       this.space + '<meta name="viewport" content="width=device-width, initial-scale=1.0">' + "\n" +
       this.space + `<title>${this.title}</title>` + "\n" +
+      this.space + `<link rel="icon" href="data:,">` +
       this.space + this.#cssLink + "\n" +
       "</head>" + "\n"
     )
