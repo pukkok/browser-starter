@@ -14,7 +14,10 @@ fs.writeFile('public/index.html', html.render, 'utf-8', (err) => {
 const server = http.createServer((req, res) => {
   // console.log(req)
   const currentFile = new FileReader(res, req.url)
-  currentFile.read
+  const xx = new FileReader(res, 123)
+  xx.read
+  console.log(xx.url)
+  // currentFile.read
 })
 
 server.listen(5000, () => {

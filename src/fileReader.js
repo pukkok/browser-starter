@@ -10,11 +10,24 @@ import fs from 'fs'
 class FileReader {
 	constructor (res, url){
 		this.res = res
-		this.url = url
+		this._url = url
+	}
+
+	get url () {
+		return this._url
+	}
+
+	set url (value) {
+		if(typeof (value) === 'string'){
+			this._url = value
+		} else {
+			console.error('url은 문자열만 사용 가능합니다.')
+
+		}
 	}
 
 	_extender() {
-		return this.url.split('.')[1]
+		return this._url.split('.').pop()
 	}
 	
 	fileContentType () {
@@ -29,10 +42,17 @@ class FileReader {
 
 	get read () {
 
-		const path = this.url === '/' ? './public/index.html' : '.' + this.url
+		const path = this._url === '/' ? './public/index.html' : '.' + this._url
 
 		fs.readFile(path, (err, readFile) => {
-			if(err) return console.error('파일 읽기 실패 : ', path)
+			if(err) {
+				fs.readFile('./public/notFound.html', (err, notFoundFile) => {
+					if(err) return console.error('서버 에러')
+					this.res.writeHead(404, { 'Content-Type': 'text/html; charset=utf8' })
+					this.res.end(notFoundFile)
+				})
+				return console.error('파일 읽기 실패 : ', path)
+			}
 			
 			this.res.writeHead(200, { 'Content-Type' : this.fileContentType() })
 			this.res.end(readFile)
