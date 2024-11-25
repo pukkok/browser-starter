@@ -15,19 +15,22 @@ import fs from 'fs'
 class FileReader {
 	constructor (res, url){
 		this.res = res
-		this._url = url
+		if(typeof url === 'string'){ // 초기 에러처리
+			this._url = url
+		} else {
+			console.error('url은 문자열만 사용 가능합니다.')
+		}
 	}
 
 	get url () {
 		return this._url
 	}
 
-	set url (value) {
-		if(typeof (value) === 'string'){
-			this._url = value
+	set url (value) { // setting 시 에러처리
+		if(typeof value === 'string'){
+			this._url = 'violet'
 		} else {
 			console.error('url은 문자열만 사용 가능합니다.')
-
 		}
 	}
 
