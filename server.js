@@ -15,9 +15,11 @@ const server = http.createServer((req, res) => {
   // console.log(req)
   const currentFile = new FileReader(res, req.url)
   const xx = new FileReader(res, 123)
-  xx.read
-  console.log(xx.url)
-  // currentFile.read
+  // xx.read
+  // console.log(xx.url)
+  // console.log(xx._extender)
+  console.log(currentFile.extender)
+  currentFile.read()
 })
 
 server.listen(5000, () => {
