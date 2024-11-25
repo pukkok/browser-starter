@@ -2,7 +2,7 @@ import http from 'http'
 import fs from 'fs'
 import { exec } from 'child_process' // child_process 모듈 추가
 import Template from './src/createTemplate.js'
-import fileReader from './src/fileReader.js'
+import FileReader from './src/fileReader.js'
 
 const html = new Template('Wait React')
 
@@ -13,7 +13,8 @@ fs.writeFile('public/index.html', html.render, 'utf-8', (err) => {
 
 const server = http.createServer((req, res) => {
   // console.log(req)
-  fileReader(res, req.url)
+  const currentFile = new FileReader(res, req.url)
+  currentFile.read
 })
 
 server.listen(5000, () => {
