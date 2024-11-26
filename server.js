@@ -15,7 +15,7 @@ const server = http.createServer((req, res) => {
   // console.log(req)
   const currentFile = new FileReader(res, req.url)
   const xx = new FileReader(res, '123')
-  xx.url = 123
+  
   currentFile.read()
 })
 

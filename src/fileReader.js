@@ -13,29 +13,31 @@ import fs from 'fs'
  * read : readFile을 실행
  */
 class FileReader {
+	#url
+	#res
 	constructor (res, url){
-		this.res = res
+		this.#res = res
 		if(typeof url === 'string'){ // 초기 에러처리
-			this._url = url
+			this.#url = url
 		} else {
 			console.error('url은 문자열만 사용 가능합니다.')
 		}
 	}
 
 	get url () {
-		return this._url
+		return this.#url
 	}
 
 	set url (value) { // setting 시 에러처리
 		if(typeof value === 'string'){
-			this._url = 'violet'
+			this.#url = '/'
 		} else {
 			console.error('url은 문자열만 사용 가능합니다.')
 		}
 	}
 
 	get extender() {
-		return this._url.split('.').pop()
+		return this.#url.split('.').pop()
 	}
 	
 	get fileContentType () {
@@ -49,20 +51,20 @@ class FileReader {
 	}
 
 	read () {
-		const path = this._url === '/' ? './public/index.html' : '.' + this._url
+		const path = this.#url === '/' ? './public/index.html' : '.' + this.#url
 
 		fs.readFile(path, (err, readFile) => {
 			if(err) { // 경로가 잘못된 경우
 				fs.readFile('./public/notFound.html', (err, notFoundFile) => {
 					if(err) return console.error('서버 에러') // 이것도 에러나면 서버 에러 처리
-					this.res.writeHead(404, { 'Content-Type': 'text/html; charset=utf8' })
-					this.res.end(notFoundFile)
+					this.#res.writeHead(404, { 'Content-Type': 'text/html; charset=utf8' })
+					this.#res.end(notFoundFile)
 				})
 				return console.error('파일 읽기 실패 : ', path)
 			}
 			
-			this.res.writeHead(200, { 'Content-Type' : this.fileContentType })
-			this.res.end(readFile)
+			this.#res.writeHead(200, { 'Content-Type' : this.fileContentType })
+			this.#res.end(readFile)
 		})
 	}
 
